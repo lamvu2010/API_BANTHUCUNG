@@ -2,10 +2,12 @@ package ptithcm.Api_BanThuCungOnline.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ptithcm.Api_BanThuCungOnline.DTO.SanPhamDTO;
 import ptithcm.Api_BanThuCungOnline.Entity.Loaisanpham;
 import ptithcm.Api_BanThuCungOnline.Entity.Sanpham;
 import ptithcm.Api_BanThuCungOnline.Repositories.SanPhamRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,7 @@ public class SanPhamService {
         return list;
     }
     //Lay san pham bang id
-    public Optional<Sanpham> findById(int id){
+    public Optional<Sanpham> findById(long id){
         Optional<Sanpham> sanpham = sanPhamRepo.findById(id);
         return sanpham;
     }
@@ -30,10 +32,21 @@ public class SanPhamService {
         List<Sanpham> list = sanPhamRepo.findByloaisanpham(loaisanpham);
         return list;
     }
-    // Them san pham
-    public Sanpham insert(Sanpham sanpham){
+    // Them san pham va cap nhat san pham
+    public Sanpham save(Sanpham sanpham){
         return sanPhamRepo.save(sanpham);
     }
-    //
-
+    //Xoa san pham
+    public void delete(Sanpham sanpham){
+        sanPhamRepo.delete(sanpham);
+    }
+    // Kiem tra ton tai
+    public boolean existsById(long id){
+        if (sanPhamRepo.existsById(id)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

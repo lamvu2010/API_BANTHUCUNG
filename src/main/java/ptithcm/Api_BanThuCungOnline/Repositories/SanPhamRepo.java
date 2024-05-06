@@ -6,6 +6,6 @@ import ptithcm.Api_BanThuCungOnline.Entity.Sanpham;
 
 import java.util.List;
 
-public interface SanPhamRepo extends JpaRepository<Sanpham,Integer> {
+public interface SanPhamRepo extends JpaRepository<Sanpham,Long> {
     List<Sanpham> findByloaisanpham(Loaisanpham loaisanpham);
 }

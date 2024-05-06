@@ -3,14 +3,16 @@ package ptithcm.Api_BanThuCungOnline.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ptithcm.Api_BanThuCungOnline.DTO.LoaiSanPhamDTO;
+import ptithcm.Api_BanThuCungOnline.DTO.SanPhamDTO;
 import ptithcm.Api_BanThuCungOnline.Entity.Loaisanpham;
 import ptithcm.Api_BanThuCungOnline.Entity.Sanpham;
 import ptithcm.Api_BanThuCungOnline.Services.LoaiSanPhamService;
 import ptithcm.Api_BanThuCungOnline.Services.SanPhamService;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,10 +24,107 @@ public class SanPhamController {
     @Autowired
     LoaiSanPhamService loaiSanPhamService;
 
+    // Lay danh sach san pham theo id loai
+    @GetMapping("/loaiSanPham/{id}")
+    public ResponseEntity<List<SanPhamDTO>> findByIdLoai(@PathVariable int id) {
+        List<SanPhamDTO> list = new ArrayList<>();
+        if (loaiSanPhamService.existsById(id)) {
+            Optional<Loaisanpham> loaisanpham = loaiSanPhamService.findById(id);
+            List<Sanpham> listSp = sanPhamService.findByIdLoai(loaisanpham.orElse(null));
+            list = sanPhamDTO(listSp);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // lay danh sach san pham
     @GetMapping
-    public ResponseEntity<List<Sanpham>> findByIdLoai(){
-        Optional<Loaisanpham> loaisanpham = loaiSanPhamService.findById(1);
-        List<Sanpham> list = sanPhamService.findByIdLoai(loaisanpham.orElse(null));
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<List<SanPhamDTO>> getAll() {
+        List<Sanpham> list = sanPhamService.findAll();
+        List<SanPhamDTO> listJson = sanPhamDTO(list);
+        return new ResponseEntity<>(listJson, HttpStatus.OK);
+    }
+
+    // List san pham to list sanphamDTO
+    public List<SanPhamDTO> sanPhamDTO(List<Sanpham> list) {
+        List<SanPhamDTO> listJson = new ArrayList<>();
+        for (Sanpham item : list) {
+            SanPhamDTO sp = new SanPhamDTO();
+            sp.setMasanpham(item.getMasanpham());
+            sp.setTensanpham(item.getTensanpham());
+            if (item.getGiahientai() != null) {
+                sp.setGiahientai(item.getGiahientai().toString());
+            } else {
+                sp.setGiahientai(null);
+            }
+            sp.setMaloaisanpham(item.getLoaisanpham().getMaloaisanpham());
+            listJson.add(sp);
+        }
+        return listJson;
+    }
+
+    // Them san pham
+    @PostMapping
+    public ResponseEntity<?> insert(@RequestBody SanPhamDTO sanPhamDTO) {
+        Sanpham sp = new Sanpham();
+        sp.setTensanpham(sanPhamDTO.getTensanpham());
+        BigDecimal giahientai;
+        try {
+            giahientai = new BigDecimal(sanPhamDTO.getGiahientai());
+        } catch (NumberFormatException e) {
+            // Bat ngoai le khong dung format
+            System.out.println("NumberFormatException: " + e.getMessage());
+            // Tra ve cap nhat hay insert that bai
+            return new ResponseEntity<>("Cap nhat that bai", HttpStatus.BAD_REQUEST);
+        }
+        sp.setGiahientai(giahientai);
+        sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getMaloaisanpham()).orElse(null));
+        sp = sanPhamService.save(sp);
+        if (sanPhamService.existsById(sp.getMasanpham())){
+            return new ResponseEntity<>(sp, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Cap nhat that bai",HttpStatus.BAD_REQUEST);
+        }
+    }
+    //Sua san pham
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody SanPhamDTO sanPhamDTO){
+        Sanpham sp = new Sanpham();
+        if(!sanPhamService.existsById(sanPhamDTO.getMasanpham())){
+            return new ResponseEntity<>(sp,HttpStatus.BAD_REQUEST);
+        }
+        sp.setMasanpham(sanPhamDTO.getMasanpham());
+        BigDecimal giahientai;
+        try {
+            giahientai = new BigDecimal(sanPhamDTO.getGiahientai());
+        } catch (NumberFormatException e) {
+            // Bat ngoai le khong dung format
+            System.out.println("NumberFormatException: " + e.getMessage());
+            // Tra ve cap nhat hay insert that bai
+            return new ResponseEntity<>("Cap nhat that bai", HttpStatus.BAD_REQUEST);
+        }
+        sp.setGiahientai(giahientai);
+        sp.setTensanpham(sanPhamDTO.getTensanpham());
+        sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getMaloaisanpham()).orElse(null));
+        sp = sanPhamService.save(sp);
+        return new ResponseEntity<>(sp,HttpStatus.OK);
+    }
+
+    // Xoa san pham
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        boolean spTonTai = sanPhamService.existsById(id);
+        if(spTonTai == false){
+            return new ResponseEntity<>("Id khong ton tai",HttpStatus.NOT_FOUND);
+        }
+        Optional<Sanpham> sanpham = sanPhamService.findById(id);
+        sanPhamService.delete(sanpham.orElse(null));
+        spTonTai = sanPhamService.existsById(id);
+        if(spTonTai == true){
+            return new ResponseEntity<>("Xoa that bai",HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<>("Xoa thanh cong",HttpStatus.OK);
+        }
     }
 }

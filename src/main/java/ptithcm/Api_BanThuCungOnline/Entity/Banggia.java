@@ -18,9 +18,9 @@ public class Banggia {
     private Date thoigianketthuc;
     @Column(name = "NOIDUNG", nullable = true, length = -1)
     private String noidung;
-    @ManyToOne
-    @JoinColumn(name = "MALOAIBANG")
-    private Loaibang loaibang;
+//    @ManyToOne
+//    @JoinColumn(name = "MALOAIBANG")
+//    private Loaibang loaibang;
     @ManyToOne
     @JoinColumn(name = "MACHINHANH")
     private Chinhanh chinhanh;
@@ -63,13 +63,13 @@ public class Banggia {
         this.noidung = noidung;
     }
 
-    public Loaibang getLoaibang() {
-        return loaibang;
-    }
-
-    public void setLoaibang(Loaibang loaibang) {
-        this.loaibang = loaibang;
-    }
+//    public Loaibang getLoaibang() {
+//        return loaibang;
+//    }
+//
+//    public void setLoaibang(Loaibang loaibang) {
+//        this.loaibang = loaibang;
+//    }
 
     public Chinhanh getChinhanh() {
         return chinhanh;
@@ -77,5 +77,21 @@ public class Banggia {
 
     public void setChinhanh(Chinhanh chinhanh) {
         this.chinhanh = chinhanh;
+    }
+
+    public List<Ctbanggiasanpham> getCtbanggiasanpham() {
+        return ctbanggiasanpham;
+    }
+
+    public void setCtbanggiasanpham(List<Ctbanggiasanpham> ctbanggiasanpham) {
+        this.ctbanggiasanpham = ctbanggiasanpham;
+    }
+
+    public List<Ctbanggiathucung> getCtbanggiathucung() {
+        return ctbanggiathucung;
+    }
+
+    public void setCtbanggiathucung(List<Ctbanggiathucung> ctbanggiathucung) {
+        this.ctbanggiathucung = ctbanggiathucung;
     }
 }

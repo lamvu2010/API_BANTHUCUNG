@@ -10,6 +10,11 @@ public class CtbanggiasanphamPK implements Serializable {
     @Column(name = "MASANPHAM", nullable = false)
     private long masanpham;
 
+    public CtbanggiasanphamPK(long mabanggia, long masanpham) {
+        this.mabanggia = mabanggia;
+        this.masanpham = masanpham;
+    }
+
     public long getMabanggia() {
         return mabanggia;
     }

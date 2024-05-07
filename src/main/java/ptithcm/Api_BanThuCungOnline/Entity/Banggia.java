@@ -1,12 +1,18 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "BANGGIA")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Banggia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -18,9 +24,6 @@ public class Banggia {
     private Date thoigianketthuc;
     @Column(name = "NOIDUNG", nullable = true, length = -1)
     private String noidung;
-//    @ManyToOne
-//    @JoinColumn(name = "MALOAIBANG")
-//    private Loaibang loaibang;
     @ManyToOne
     @JoinColumn(name = "MACHINHANH")
     private Chinhanh chinhanh;
@@ -31,67 +34,4 @@ public class Banggia {
     @OneToMany(mappedBy = "banggia")
     List<Ctbanggiathucung> ctbanggiathucung;
 
-    public long getMabanggia() {
-        return mabanggia;
-    }
-
-    public void setMabanggia(long mabanggia) {
-        this.mabanggia = mabanggia;
-    }
-
-    public Date getThoigianbatdau() {
-        return thoigianbatdau;
-    }
-
-    public void setThoigianbatdau(Date thoigianbatdau) {
-        this.thoigianbatdau = thoigianbatdau;
-    }
-
-    public Date getThoigianketthuc() {
-        return thoigianketthuc;
-    }
-
-    public void setThoigianketthuc(Date thoigianketthuc) {
-        this.thoigianketthuc = thoigianketthuc;
-    }
-
-    public String getNoidung() {
-        return noidung;
-    }
-
-    public void setNoidung(String noidung) {
-        this.noidung = noidung;
-    }
-
-//    public Loaibang getLoaibang() {
-//        return loaibang;
-//    }
-//
-//    public void setLoaibang(Loaibang loaibang) {
-//        this.loaibang = loaibang;
-//    }
-
-    public Chinhanh getChinhanh() {
-        return chinhanh;
-    }
-
-    public void setChinhanh(Chinhanh chinhanh) {
-        this.chinhanh = chinhanh;
-    }
-
-    public List<Ctbanggiasanpham> getCtbanggiasanpham() {
-        return ctbanggiasanpham;
-    }
-
-    public void setCtbanggiasanpham(List<Ctbanggiasanpham> ctbanggiasanpham) {
-        this.ctbanggiasanpham = ctbanggiasanpham;
-    }
-
-    public List<Ctbanggiathucung> getCtbanggiathucung() {
-        return ctbanggiathucung;
-    }
-
-    public void setCtbanggiathucung(List<Ctbanggiathucung> ctbanggiathucung) {
-        this.ctbanggiathucung = ctbanggiathucung;
-    }
 }

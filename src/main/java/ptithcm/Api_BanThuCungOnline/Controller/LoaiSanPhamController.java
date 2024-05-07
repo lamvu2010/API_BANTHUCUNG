@@ -73,9 +73,7 @@ public class LoaiSanPhamController {
         if (!existsIdBeforeDelete) {
             return new ResponseEntity<>("Entity not found", HttpStatus.NOT_FOUND);
         }
-
         loaiSanPhamService.deleteById(id);
-
         boolean existsIdAfterDelete = loaiSanPhamService.existsById(id);
         if (existsIdAfterDelete) {
             return new ResponseEntity<>("Failed to delete entity", HttpStatus.BAD_REQUEST);
@@ -83,5 +81,4 @@ public class LoaiSanPhamController {
             return new ResponseEntity<>("Success to delete entity", HttpStatus.OK);
         }
     }
-
 }

@@ -1,11 +1,17 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "LOAITHUCUNG")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Loaithucung {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -17,21 +23,4 @@ public class Loaithucung {
 
     @OneToMany(mappedBy = "loaithucung")
     List<Giong> giong;
-
-    public int getMaloaithucung() {
-        return maloaithucung;
-    }
-
-    public void setMaloaithucung(int maloaithucung) {
-        this.maloaithucung = maloaithucung;
-    }
-
-    public String getTenloaithucung() {
-        return tenloaithucung;
-    }
-
-    public void setTenloaithucung(String tenloaithucung) {
-        this.tenloaithucung = tenloaithucung;
-    }
-
 }

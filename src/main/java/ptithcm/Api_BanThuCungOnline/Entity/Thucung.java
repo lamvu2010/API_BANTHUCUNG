@@ -1,7 +1,9 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "THUCUNG")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Thucung {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -40,5 +44,4 @@ public class Thucung {
     @ManyToOne
     @JoinColumn(name = "MAGIONG")
     private Giong giong;
-
 }

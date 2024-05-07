@@ -1,10 +1,16 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Embeddable
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CtmuasanphamPK implements Serializable {
     @Column(name = "SODONDAT", nullable = false)
     private long sodondat;
@@ -12,28 +18,4 @@ public class CtmuasanphamPK implements Serializable {
     private long masanpham;
     @Column(name = "MACHINHANH",nullable = false)
     private long machinhanh;
-
-    public long getSodondat() {
-        return sodondat;
-    }
-
-    public void setSodondat(long sodondat) {
-        this.sodondat = sodondat;
-    }
-
-    public long getMachinhanh() {
-        return machinhanh;
-    }
-
-    public void setMachinhanh(long machinhanh) {
-        this.machinhanh = machinhanh;
-    }
-
-    public long getMasanpham() {
-        return masanpham;
-    }
-
-    public void setMasanpham(long masanpham) {
-        this.masanpham = masanpham;
-    }
 }

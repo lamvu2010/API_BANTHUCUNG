@@ -1,11 +1,18 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "SANPHAM")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Sanpham {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -16,7 +23,7 @@ public class Sanpham {
     private String tensanpham;
 
     @Column(name = "GIAHIENTAI", nullable = true)
-    private Object giahientai;
+    private BigDecimal giahientai;
 
 
     @ManyToOne
@@ -31,36 +38,4 @@ public class Sanpham {
 
     @OneToMany(mappedBy = "sanpham")
     List<Ctsanpham> ctsanpham;
-
-    public long getMasanpham() {
-        return masanpham;
-    }
-
-    public void setMasanpham(long masanpham) {
-        this.masanpham = masanpham;
-    }
-
-    public String getTensanpham() {
-        return tensanpham;
-    }
-
-    public void setTensanpham(String tensanpham) {
-        this.tensanpham = tensanpham;
-    }
-
-    public Object getGiahientai() {
-        return giahientai;
-    }
-
-    public void setGiahientai(Object giahientai) {
-        this.giahientai = giahientai;
-    }
-
-    public Loaisanpham getLoaisanpham() {
-        return loaisanpham;
-    }
-
-    public void setLoaisanpham(Loaisanpham loaisanpham) {
-        this.loaisanpham = loaisanpham;
-    }
 }

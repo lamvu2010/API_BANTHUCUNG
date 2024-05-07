@@ -1,12 +1,18 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "KHACHHANG")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Khachhang {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -45,85 +51,4 @@ public class Khachhang {
 
     @OneToMany(mappedBy = "khachhang")
     private List<Dondat> dondat;
-
-    public String getMakhachhang() {
-        return makhachhang;
-    }
-
-    public void setMakhachhang(String makhachhang) {
-        this.makhachhang = makhachhang;
-    }
-
-    public String getHo() {
-        return ho;
-    }
-
-    public void setHo(String ho) {
-        this.ho = ho;
-    }
-
-    public String getTen() {
-        return ten;
-    }
-
-    public void setTen(String ten) {
-        this.ten = ten;
-    }
-
-    public Boolean getGioitinh() {
-        return gioitinh;
-    }
-
-    public void setGioitinh(Boolean gioitinh) {
-        this.gioitinh = gioitinh;
-    }
-
-    public Date getNgaysinh() {
-        return ngaysinh;
-    }
-
-    public void setNgaysinh(Date ngaysinh) {
-        this.ngaysinh = ngaysinh;
-    }
-
-    public String getDiachi() {
-        return diachi;
-    }
-
-    public void setDiachi(String diachi) {
-        this.diachi = diachi;
-    }
-
-    public String getHinhanh() {
-        return hinhanh;
-    }
-
-    public void setHinhanh(String hinhanh) {
-        this.hinhanh = hinhanh;
-    }
-
-    public String getSodienthoai() {
-        return sodienthoai;
-    }
-
-    public void setSodienthoai(String sodienthoai) {
-        this.sodienthoai = sodienthoai;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCccd() {
-        return cccd;
-    }
-
-    public void setCccd(String cccd) {
-        this.cccd = cccd;
-    }
-
 }

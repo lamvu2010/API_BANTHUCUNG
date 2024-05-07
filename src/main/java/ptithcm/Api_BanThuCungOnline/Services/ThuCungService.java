@@ -19,7 +19,7 @@ public class ThuCungService {
     }
 
     // Lay thu cung bang id
-    Optional<Thucung> findById(long id){
+    public Optional<Thucung> findById(long id){
         return thuCungRepo.findById(id);
     }
 

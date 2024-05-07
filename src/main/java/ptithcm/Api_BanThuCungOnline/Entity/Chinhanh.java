@@ -1,9 +1,15 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "CHINHANH")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Chinhanh {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -11,21 +17,5 @@ public class Chinhanh {
     private int machinhanh;
     @Column(name = "TENCHINHANH", nullable = true, length = 50)
     private String tenchinhanh;
-
-    public int getMachinhanh() {
-        return machinhanh;
-    }
-
-    public void setMachinhanh(int machinhanh) {
-        this.machinhanh = machinhanh;
-    }
-
-    public String getTenchinhanh() {
-        return tenchinhanh;
-    }
-
-    public void setTenchinhanh(String tenchinhanh) {
-        this.tenchinhanh = tenchinhanh;
-    }
 
 }

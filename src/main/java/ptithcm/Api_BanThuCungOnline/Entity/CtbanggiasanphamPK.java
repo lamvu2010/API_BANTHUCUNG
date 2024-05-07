@@ -1,34 +1,16 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.io.Serializable;
 @Embeddable
+@Data
+@AllArgsConstructor
 public class CtbanggiasanphamPK implements Serializable {
     @Column(name = "MABANGGIA", nullable = false)
     private long mabanggia;
     @Column(name = "MASANPHAM", nullable = false)
     private long masanpham;
-
-    public CtbanggiasanphamPK(long mabanggia, long masanpham) {
-        this.mabanggia = mabanggia;
-        this.masanpham = masanpham;
-    }
-
-    public long getMabanggia() {
-        return mabanggia;
-    }
-
-    public void setMabanggia(long mabanggia) {
-        this.mabanggia = mabanggia;
-    }
-
-    public long getMasanpham() {
-        return masanpham;
-    }
-
-    public void setMasanpham(long masanpham) {
-        this.masanpham = masanpham;
-    }
-
 }

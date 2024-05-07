@@ -1,9 +1,15 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "TAIKHOAN")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Taikhoan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -23,30 +29,4 @@ public class Taikhoan {
     @OneToOne
     @MapsId
     private Nhanvien nhanvien;
-
-
-    public String getTendangnhap() {
-        return tendangnhap;
-    }
-
-    public void setTendangnhap(String tendangnhap) {
-        this.tendangnhap = tendangnhap;
-    }
-
-    public String getMatkhau() {
-        return matkhau;
-    }
-
-    public void setMatkhau(String matkhau) {
-        this.matkhau = matkhau;
-    }
-
-    public Boolean getQuyen() {
-        return quyen;
-    }
-
-    public void setQuyen(Boolean quyen) {
-        this.quyen = quyen;
-    }
-
 }

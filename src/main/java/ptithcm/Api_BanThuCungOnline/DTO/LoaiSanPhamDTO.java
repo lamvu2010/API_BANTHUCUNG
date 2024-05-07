@@ -1,25 +1,13 @@
 package ptithcm.Api_BanThuCungOnline.DTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoaiSanPhamDTO {
     int maLoaiSanPham;
     String tenLoaiSanPham;
-
-    public LoaiSanPhamDTO() {
-    }
-
-    public int getMaLoaiSanPham() {
-        return maLoaiSanPham;
-    }
-
-    public void setMaLoaiSanPham(int maLoaiSanPham) {
-        this.maLoaiSanPham = maLoaiSanPham;
-    }
-
-    public String getTenLoaiSanPham() {
-        return tenLoaiSanPham;
-    }
-
-    public void setTenLoaiSanPham(String tenLoaiSanPham) {
-        this.tenLoaiSanPham = tenLoaiSanPham;
-    }
 }

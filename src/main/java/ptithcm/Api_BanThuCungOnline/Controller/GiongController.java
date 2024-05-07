@@ -42,14 +42,13 @@ public class GiongController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody GiongDTO giongDTO){
-        if(!giongService.isExistsById(giongDTO.getId())){
+        if(!giongService.isExistsById(giongDTO.getMaGiong())){
             return new ResponseEntity<>("Giống không tồn tại",HttpStatus.BAD_REQUEST);
         }
-
         Giong giong = new Giong();
-        giong.setMagiong(giongDTO.getId());
+        giong.setMagiong(giongDTO.getMaGiong());
         giong.setTengiong(giongDTO.getTengiong());
-        giong.setLoaithucung(loaiThuCungService.findById(giongDTO.getId()).orElse(null));
+        giong.setLoaithucung(loaiThuCungService.findById(giongDTO.getMaGiong()).orElse(null));
         giongService.save(giong);
         return new ResponseEntity<>(giong,HttpStatus.OK);
     }

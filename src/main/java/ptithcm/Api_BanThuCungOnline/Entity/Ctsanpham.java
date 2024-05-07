@@ -1,12 +1,18 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "CTSANPHAM")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Ctsanpham {
 
     @EmbeddedId
@@ -31,29 +37,4 @@ public class Ctsanpham {
     @OneToMany(mappedBy = "ctsanpham")
     private List<Ctmuasanpham> ctmuasanpham;
 
-
-    public CtsanphamPK getId() {
-        return id;
-    }
-
-    public void setId(CtsanphamPK id) {
-        this.id = id;
-    }
-
-
-    public Long getSoluongton() {
-        return soluongton;
-    }
-
-    public void setSoluongton(Long soluongton) {
-        this.soluongton = soluongton;
-    }
-
-    public BigDecimal getDongia() {
-        return dongia;
-    }
-
-    public void setDongia(BigDecimal dongia) {
-        this.dongia = dongia;
-    }
 }

@@ -1,12 +1,18 @@
 package ptithcm.Api_BanThuCungOnline.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "DONDAT")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Dondat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -39,52 +45,4 @@ public class Dondat {
 
     @OneToMany(mappedBy = "dondat")
     private List<Ctmuathucung> ctmuathucung;
-
-    public long getSodondat() {
-        return sodondat;
-    }
-
-    public void setSodondat(long sodondat) {
-        this.sodondat = sodondat;
-    }
-
-    public Date getNgaylap() {
-        return ngaylap;
-    }
-
-    public void setNgaylap(Date ngaylap) {
-        this.ngaylap = ngaylap;
-    }
-
-    public String getDiachidat() {
-        return diachidat;
-    }
-
-    public void setDiachidat(String diachidat) {
-        this.diachidat = diachidat;
-    }
-
-    public String getSodienthoai() {
-        return sodienthoai;
-    }
-
-    public void setSodienthoai(String sodienthoai) {
-        this.sodienthoai = sodienthoai;
-    }
-
-    public Chinhanh getChinhanh() {
-        return chinhanh;
-    }
-
-    public void setChinhanh(Chinhanh chinhanh) {
-        this.chinhanh = chinhanh;
-    }
-
-    public Khachhang getKhachhang() {
-        return khachhang;
-    }
-
-    public void setKhachhang(Khachhang khachhang) {
-        this.khachhang = khachhang;
-    }
 }

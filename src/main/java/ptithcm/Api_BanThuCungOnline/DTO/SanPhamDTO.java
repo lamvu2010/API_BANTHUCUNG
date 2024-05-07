@@ -1,45 +1,17 @@
 package ptithcm.Api_BanThuCungOnline.DTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SanPhamDTO {
     long masanpham;
     String tensanpham;
-    String giahientai;
+    BigDecimal giahientai;
     int maloaisanpham;
-
-    public SanPhamDTO() {
-    }
-
-    public long getMasanpham() {
-        return masanpham;
-    }
-
-    public void setMasanpham(long masanpham) {
-        this.masanpham = masanpham;
-    }
-
-    public String getTensanpham() {
-        return tensanpham;
-    }
-
-    public void setTensanpham(String tensanpham) {
-        this.tensanpham = tensanpham;
-    }
-
-    public String getGiahientai() {
-        return giahientai;
-    }
-
-    public void setGiahientai(String giahientai) {
-        this.giahientai = giahientai;
-    }
-
-    public int getMaloaisanpham() {
-        return maloaisanpham;
-    }
-
-    public void setMaloaisanpham(int maloaisanpham) {
-        this.maloaisanpham = maloaisanpham;
-    }
 }

@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 public class GiongDTO {
-    int id;
+    int maGiong;
     String tengiong;
     int idLoaiThuCung;
 }

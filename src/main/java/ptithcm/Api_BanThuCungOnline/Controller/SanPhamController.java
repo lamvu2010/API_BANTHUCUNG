@@ -53,11 +53,7 @@ public class SanPhamController {
             SanPhamDTO sp = new SanPhamDTO();
             sp.setMasanpham(item.getMasanpham());
             sp.setTensanpham(item.getTensanpham());
-            if (item.getGiahientai() != null) {
-                sp.setGiahientai(item.getGiahientai().toString());
-            } else {
-                sp.setGiahientai(null);
-            }
+            sp.setGiahientai(item.getGiahientai());
             sp.setMaloaisanpham(item.getLoaisanpham().getMaloaisanpham());
             listJson.add(sp);
         }
@@ -69,62 +65,45 @@ public class SanPhamController {
     public ResponseEntity<?> insert(@RequestBody SanPhamDTO sanPhamDTO) {
         Sanpham sp = new Sanpham();
         sp.setTensanpham(sanPhamDTO.getTensanpham());
-        BigDecimal giahientai;
-        try {
-            giahientai = new BigDecimal(sanPhamDTO.getGiahientai());
-        } catch (NumberFormatException e) {
-            // Bat ngoai le khong dung format
-            System.out.println("NumberFormatException: " + e.getMessage());
-            // Tra ve cap nhat hay insert that bai
-            return new ResponseEntity<>("Cap nhat that bai", HttpStatus.BAD_REQUEST);
-        }
-        sp.setGiahientai(giahientai);
+        sp.setGiahientai(sanPhamDTO.getGiahientai());
         sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getMaloaisanpham()).orElse(null));
         sp = sanPhamService.save(sp);
-        if (sanPhamService.existsById(sp.getMasanpham())){
+        if (sanPhamService.existsById(sp.getMasanpham())) {
             return new ResponseEntity<>(sp, HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>("Cap nhat that bai",HttpStatus.BAD_REQUEST);
-        }
-    }
-    //Sua san pham
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody SanPhamDTO sanPhamDTO){
-        Sanpham sp = new Sanpham();
-        if(!sanPhamService.existsById(sanPhamDTO.getMasanpham())){
-            return new ResponseEntity<>(sp,HttpStatus.BAD_REQUEST);
-        }
-        sp.setMasanpham(sanPhamDTO.getMasanpham());
-        BigDecimal giahientai;
-        try {
-            giahientai = new BigDecimal(sanPhamDTO.getGiahientai());
-        } catch (NumberFormatException e) {
-            // Bat ngoai le khong dung format
-            System.out.println("NumberFormatException: " + e.getMessage());
-            // Tra ve cap nhat hay insert that bai
+        } else {
             return new ResponseEntity<>("Cap nhat that bai", HttpStatus.BAD_REQUEST);
         }
-        sp.setGiahientai(giahientai);
+    }
+
+    //Sua san pham
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody SanPhamDTO sanPhamDTO) {
+        Sanpham sp = new Sanpham();
+        if (!sanPhamService.existsById(sanPhamDTO.getMasanpham())) {
+            return new ResponseEntity<>(sp, HttpStatus.BAD_REQUEST);
+        }
+        sp.setMasanpham(sanPhamDTO.getMasanpham());
+        sp.setGiahientai(sanPhamDTO.getGiahientai());
         sp.setTensanpham(sanPhamDTO.getTensanpham());
         sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getMaloaisanpham()).orElse(null));
         sp = sanPhamService.save(sp);
-        return new ResponseEntity<>(sp,HttpStatus.OK);
+        return new ResponseEntity<>(sp, HttpStatus.OK);
     }
 
     // Xoa san pham
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         boolean spTonTai = sanPhamService.existsById(id);
-        if(spTonTai == false){
-            return new ResponseEntity<>("Id khong ton tai",HttpStatus.NOT_FOUND);
+        if (spTonTai == false) {
+            return new ResponseEntity<>("Id khong ton tai", HttpStatus.NOT_FOUND);
         }
         Optional<Sanpham> sanpham = sanPhamService.findById(id);
         sanPhamService.delete(sanpham.orElse(null));
         spTonTai = sanPhamService.existsById(id);
-        if(spTonTai == true){
-            return new ResponseEntity<>("Xoa that bai",HttpStatus.BAD_REQUEST);
-        }else{
-            return new ResponseEntity<>("Xoa thanh cong",HttpStatus.OK);
+        if (spTonTai == true) {
+            return new ResponseEntity<>("Xoa that bai", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>("Xoa thanh cong", HttpStatus.OK);
         }
     }
 }

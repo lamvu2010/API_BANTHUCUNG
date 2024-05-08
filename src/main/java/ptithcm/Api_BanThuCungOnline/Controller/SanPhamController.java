@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ptithcm.Api_BanThuCungOnline.DTO.LoaiSanPhamDTO;
-import ptithcm.Api_BanThuCungOnline.DTO.SanPhamDTO;
+import ptithcm.Api_BanThuCungOnline.DTOResponse.LoaiSanPhamDTO;
+import ptithcm.Api_BanThuCungOnline.DTOResponse.SanPhamDTO;
 import ptithcm.Api_BanThuCungOnline.Entity.Loaisanpham;
 import ptithcm.Api_BanThuCungOnline.Entity.Sanpham;
 import ptithcm.Api_BanThuCungOnline.Services.LoaiSanPhamService;
 import ptithcm.Api_BanThuCungOnline.Services.SanPhamService;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,25 +50,43 @@ public class SanPhamController {
         List<SanPhamDTO> listJson = new ArrayList<>();
         for (Sanpham item : list) {
             SanPhamDTO sp = new SanPhamDTO();
-            sp.setMasanpham(item.getMasanpham());
-            sp.setTensanpham(item.getTensanpham());
-            sp.setGiahientai(item.getGiahientai());
-            sp.setMaloaisanpham(item.getLoaisanpham().getMaloaisanpham());
+            sp.setMaSanPham(item.getMasanpham());
+            sp.setTenSanPham(item.getTensanpham());
+            sp.setGiaHienTai(item.getGiahientai());
+            sp.setLoaiSanPham(new LoaiSanPhamDTO());
+            if (item.getLoaisanpham() != null) {
+                sp.getLoaiSanPham().setMaLoaiSanPham(item.getLoaisanpham().getMaloaisanpham());
+                sp.getLoaiSanPham().setTenLoaiSanPham(item.getLoaisanpham().getTenloaisanpham());
+            }
             listJson.add(sp);
         }
         return listJson;
+    }
+
+    public SanPhamDTO convertToDTO(Sanpham sanpham) {
+        SanPhamDTO sanPhamDTO = new SanPhamDTO();
+        sanPhamDTO.setMaSanPham(sanpham.getMasanpham());
+        sanPhamDTO.setTenSanPham(sanpham.getTensanpham());
+        sanPhamDTO.setGiaHienTai(sanpham.getGiahientai());
+        sanPhamDTO.setLoaiSanPham(new LoaiSanPhamDTO());
+        if (sanpham.getLoaisanpham() != null) {
+            sanPhamDTO.getLoaiSanPham().setMaLoaiSanPham(sanpham.getLoaisanpham().getMaloaisanpham());
+            sanPhamDTO.getLoaiSanPham().setTenLoaiSanPham(sanpham.getLoaisanpham().getTenloaisanpham());
+        }
+        return sanPhamDTO;
     }
 
     // Them san pham
     @PostMapping
     public ResponseEntity<?> insert(@RequestBody SanPhamDTO sanPhamDTO) {
         Sanpham sp = new Sanpham();
-        sp.setTensanpham(sanPhamDTO.getTensanpham());
-        sp.setGiahientai(sanPhamDTO.getGiahientai());
-        sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getMaloaisanpham()).orElse(null));
+        sp.setTensanpham(sanPhamDTO.getTenSanPham());
+        sp.setGiahientai(sanPhamDTO.getGiaHienTai());
+        sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getLoaiSanPham().getMaLoaiSanPham()).orElse(null));
         sp = sanPhamService.save(sp);
         if (sanPhamService.existsById(sp.getMasanpham())) {
-            return new ResponseEntity<>(sp, HttpStatus.OK);
+            SanPhamDTO sanPhamDTO1 = convertToDTO(sp);
+            return new ResponseEntity<>(sanPhamDTO1, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Cap nhat that bai", HttpStatus.BAD_REQUEST);
         }
@@ -79,15 +96,16 @@ public class SanPhamController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody SanPhamDTO sanPhamDTO) {
         Sanpham sp = new Sanpham();
-        if (!sanPhamService.existsById(sanPhamDTO.getMasanpham())) {
+        if (!sanPhamService.existsById(sanPhamDTO.getMaSanPham())) {
             return new ResponseEntity<>(sp, HttpStatus.BAD_REQUEST);
         }
-        sp.setMasanpham(sanPhamDTO.getMasanpham());
-        sp.setGiahientai(sanPhamDTO.getGiahientai());
-        sp.setTensanpham(sanPhamDTO.getTensanpham());
-        sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getMaloaisanpham()).orElse(null));
+        sp.setMasanpham(sanPhamDTO.getMaSanPham());
+        sp.setGiahientai(sanPhamDTO.getGiaHienTai());
+        sp.setTensanpham(sanPhamDTO.getTenSanPham());
+        sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getLoaiSanPham().getMaLoaiSanPham()).orElse(null));
         sp = sanPhamService.save(sp);
-        return new ResponseEntity<>(sp, HttpStatus.OK);
+        SanPhamDTO sanPhamDTO1 = convertToDTO(sp);
+        return new ResponseEntity<>(sanPhamDTO1, HttpStatus.OK);
     }
 
     // Xoa san pham

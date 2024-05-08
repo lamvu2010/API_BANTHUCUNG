@@ -1,4 +1,4 @@
-package ptithcm.Api_BanThuCungOnline.DTO;
+package ptithcm.Api_BanThuCungOnline.DTOResponse;
 
 import lombok.*;
 
@@ -8,5 +8,5 @@ import lombok.*;
 public class GiongDTO {
     int maGiong;
     String tengiong;
-    int idLoaiThuCung;
+    LoaiThuCungDTO loaiThuCung;
 }

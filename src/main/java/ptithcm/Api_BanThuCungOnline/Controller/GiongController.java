@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ptithcm.Api_BanThuCungOnline.DTO.GiongDTO;
+import ptithcm.Api_BanThuCungOnline.DTOResponse.GiongDTO;
+import ptithcm.Api_BanThuCungOnline.DTOResponse.LoaiThuCungDTO;
 import ptithcm.Api_BanThuCungOnline.Entity.Giong;
 import ptithcm.Api_BanThuCungOnline.Services.GiongService;
 import ptithcm.Api_BanThuCungOnline.Services.LoaiThuCungService;
@@ -20,23 +21,40 @@ public class GiongController {
     @Autowired
     LoaiThuCungService loaiThuCungService;
 
+    public GiongDTO convertToDTO(Giong giong){
+        GiongDTO giongDTO = new GiongDTO();
+        giongDTO.setMaGiong(giong.getMagiong());
+        giongDTO.setTengiong(giong.getTengiong());
+        giongDTO.setLoaiThuCung(new LoaiThuCungDTO());
+        if(giong.getLoaithucung()!= null){
+            giongDTO.getLoaiThuCung().setMaLoaiThuCung(giong.getLoaithucung().getMaloaithucung());
+            giongDTO.getLoaiThuCung().setTenLoaiThuCung(giong.getLoaithucung().getTenloaithucung());
+        }
+        return giongDTO;
+    }
     @GetMapping
-    public ResponseEntity<List<Giong>> findAll(){
+    public ResponseEntity<List<GiongDTO>> findAll(){
         List<Giong> list = new ArrayList<>();
+        List<GiongDTO> dtoList = new ArrayList<>();
         list = giongService.findAll();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        for(Giong item : list){
+            GiongDTO giongDTO = convertToDTO(item);
+            dtoList.add(giongDTO);
+        }
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Giong> insert(@RequestBody GiongDTO giongDTO){
+    public ResponseEntity<?> insert(@RequestBody GiongDTO giongDTO){
         Giong giong = new Giong();
         giong.setTengiong(giongDTO.getTengiong());
-        giong.setLoaithucung(loaiThuCungService.findById(giongDTO.getIdLoaiThuCung()).orElse(null));
+        giong.setLoaithucung(loaiThuCungService.findById(giongDTO.getLoaiThuCung().getMaLoaiThuCung()).orElse(null));
         giong = giongService.save(giong);
         if (giongService.isExistsById(giong.getMagiong())){
-            return new ResponseEntity<>(giong,HttpStatus.OK);
+            GiongDTO giongDTO1 = convertToDTO(giong);
+            return new ResponseEntity<>(giongDTO1,HttpStatus.OK);
         }else{
-            return new ResponseEntity<>(giong,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Thêm thất bại",HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -50,7 +68,8 @@ public class GiongController {
         giong.setTengiong(giongDTO.getTengiong());
         giong.setLoaithucung(loaiThuCungService.findById(giongDTO.getMaGiong()).orElse(null));
         giongService.save(giong);
-        return new ResponseEntity<>(giong,HttpStatus.OK);
+        GiongDTO giongDTO1 = convertToDTO(giong);
+        return new ResponseEntity<>(giongDTO1,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

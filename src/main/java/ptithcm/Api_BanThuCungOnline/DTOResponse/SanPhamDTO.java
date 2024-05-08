@@ -1,4 +1,4 @@
-package ptithcm.Api_BanThuCungOnline.DTO;
+package ptithcm.Api_BanThuCungOnline.DTOResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SanPhamDTO {
-    long masanpham;
-    String tensanpham;
-    BigDecimal giahientai;
-    int maloaisanpham;
+    long maSanPham;
+    String tenSanPham;
+    BigDecimal giaHienTai;
+    LoaiSanPhamDTO loaiSanPham;
 }

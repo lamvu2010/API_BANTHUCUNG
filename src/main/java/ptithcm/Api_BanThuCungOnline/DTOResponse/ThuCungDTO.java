@@ -1,4 +1,4 @@
-package ptithcm.Api_BanThuCungOnline.DTO;
+package ptithcm.Api_BanThuCungOnline.DTOResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,12 +10,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ThuCungDTO {
-    long mathucung;
-    String tenthucung;
-    int trangthaiban;
+    long maThuCung;
+    String tenThuCung;
+    int trangThaiBan;
     String chu;
-    String mota;
-    BigDecimal giahientai;
-    int machinhanh;
-    int magiong;
+    String moTa;
+    BigDecimal giaHienTai;
+    ChiNhanhDTO chiNhanh;
+    GiongDTO giong;
+
+
 }

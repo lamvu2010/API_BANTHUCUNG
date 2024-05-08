@@ -1,4 +1,4 @@
-package ptithcm.Api_BanThuCungOnline.DTO;
+package ptithcm.Api_BanThuCungOnline.DTOResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChiNhanhDTO {
-    String machinhanh;
+    int maChiNhanh;
+    String tenChiNhanh;
 }

@@ -1,4 +1,4 @@
-package ptithcm.Api_BanThuCungOnline.DTO;
+package ptithcm.Api_BanThuCungOnline.DTOResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

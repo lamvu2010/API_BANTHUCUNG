@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ptithcm.Api_BanThuCungOnline.DTO.ChiTietBangGiaSanPhamDTO;
+import ptithcm.Api_BanThuCungOnline.DTOResponse.ChiTietBangGiaSanPhamDTO;
 import ptithcm.Api_BanThuCungOnline.Services.ChiTietBangGiaSanPhamService;
 
 import java.util.ArrayList;

@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ptithcm.Api_BanThuCungOnline.DTO.LoaiSanPhamDTO;
+import ptithcm.Api_BanThuCungOnline.DTOResponse.LoaiSanPhamDTO;
 import ptithcm.Api_BanThuCungOnline.Entity.Loaisanpham;
 import ptithcm.Api_BanThuCungOnline.Services.LoaiSanPhamService;
 
@@ -19,14 +19,25 @@ public class LoaiSanPhamController {
     @Autowired
     LoaiSanPhamService loaiSanPhamService;
 
+    public LoaiSanPhamDTO convertToDTO(Loaisanpham loaisanpham){
+        LoaiSanPhamDTO loaiSanPhamDTO = new LoaiSanPhamDTO();
+        loaiSanPhamDTO.setMaLoaiSanPham(loaisanpham.getMaloaisanpham());
+        loaiSanPhamDTO.setTenLoaiSanPham(loaisanpham.getTenloaisanpham());
+        return loaiSanPhamDTO;
+    }
     @GetMapping
-    public ResponseEntity<List<Loaisanpham>> getAll() {
+    public ResponseEntity<List<LoaiSanPhamDTO>> getAll() {
         List<Loaisanpham> list = new ArrayList<>();
+        List<LoaiSanPhamDTO> dtoList = new ArrayList<>();
         list = loaiSanPhamService.findAll();
         if (list.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            for(Loaisanpham item : list){
+                LoaiSanPhamDTO loaiSanPhamDTO = convertToDTO(item);
+                dtoList.add(loaiSanPhamDTO);
+            }
+            return new ResponseEntity<>(dtoList, HttpStatus.OK);
         }
     }
 
@@ -36,7 +47,8 @@ public class LoaiSanPhamController {
         if (loaisanpham.isEmpty()) {
             return new ResponseEntity<>("Entity not found", HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(loaisanpham, HttpStatus.OK);
+            LoaiSanPhamDTO loaiSanPhamDTO = convertToDTO(loaisanpham.orElse(null));
+            return new ResponseEntity<>(loaiSanPhamDTO, HttpStatus.OK);
         }
     }
 
@@ -49,7 +61,8 @@ public class LoaiSanPhamController {
         loaisanpham.setTenloaisanpham(tenLoaiSanPham);
         Loaisanpham loaisanphamSaved = loaiSanPhamService.save(loaisanpham);
         if (loaisanphamSaved != null && loaisanphamSaved.getMaloaisanpham() > 0) {
-            return new ResponseEntity<>(loaisanphamSaved, HttpStatus.OK);
+            LoaiSanPhamDTO loaiSanPhamDTO = convertToDTO(loaisanphamSaved);
+            return new ResponseEntity<>(loaiSanPhamDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Cannot save entity. Try again", HttpStatus.BAD_REQUEST);
         }
@@ -64,7 +77,8 @@ public class LoaiSanPhamController {
         loaisanpham.setMaloaisanpham(loaiSanPhamDTO.getMaLoaiSanPham());
         loaisanpham.setTenloaisanpham(loaiSanPhamDTO.getTenLoaiSanPham());
         loaiSanPhamService.save(loaisanpham);
-        return new ResponseEntity<>(loaisanpham, HttpStatus.OK);
+        LoaiSanPhamDTO loaiSanPhamDTO1 = convertToDTO(loaisanpham);
+        return new ResponseEntity<>(loaiSanPhamDTO1, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -1,8 +1,11 @@
-package ptithcm.Api_BanThuCungOnline.DTO;
+package ptithcm.Api_BanThuCungOnline.DTOResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor
@@ -11,12 +14,11 @@ public class ChiTietBangGiaSanPhamDTO {
     private long mabanggia;
     private long masanpham;
     private String tensanpham;
-    private String dongia;
-    private String thoigianbatdau;
-    private String thoigianketthuc;
+    private BigDecimal dongia;
+    private Date thoigianbatdau;
+    private Date thoigianketthuc;
     private String noidungbanggia;
-    private String maloaibang;
-    private String machinhanh;
-    private String giahientai;
-    private String maloaisanpham;
+    private int machinhanh;
+    private BigDecimal giahientai;
+    private int maloaisanpham;
 }

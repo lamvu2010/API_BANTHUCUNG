@@ -2,12 +2,10 @@ package ptithcm.Api_BanThuCungOnline.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ptithcm.Api_BanThuCungOnline.DTO.SanPhamDTO;
 import ptithcm.Api_BanThuCungOnline.Entity.Loaisanpham;
 import ptithcm.Api_BanThuCungOnline.Entity.Sanpham;
 import ptithcm.Api_BanThuCungOnline.Repositories.SanPhamRepo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

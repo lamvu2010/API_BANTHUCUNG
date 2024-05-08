@@ -25,4 +25,5 @@ public class ChiTietBangGiaSanPhamController {
         List<Map<?,?>> result = chiTietBangGiaSanPhamService.danhSachThuCungBan();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    // fix lại sp
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -19,11 +20,13 @@ public class Banggia {
     @Column(name = "MABANGGIA", nullable = false)
     private long mabanggia;
     @Column(name = "THOIGIANBATDAU", nullable = true)
-    private Date thoigianbatdau;
+    private Timestamp thoigianbatdau;
     @Column(name = "THOIGIANKETTHUC", nullable = true)
-    private Date thoigianketthuc;
+    private Timestamp thoigianketthuc;
     @Column(name = "NOIDUNG", nullable = true, length = -1)
     private String noidung;
+    @Column(name = "TRANGTHAI",nullable = true)
+    private Boolean trangthai;
     @ManyToOne
     @JoinColumn(name = "MACHINHANH")
     private Chinhanh chinhanh;

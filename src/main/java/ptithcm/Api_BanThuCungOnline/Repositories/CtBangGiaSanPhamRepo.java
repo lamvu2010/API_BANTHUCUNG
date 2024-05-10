@@ -9,6 +9,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface CtBangGiaSanPhamRepo extends JpaRepository<Ctbanggiasanpham, CtbanggiasanphamPK> {
-    @Query(value = "execute DANHSACHTHUCUNGBAN;",nativeQuery = true)
-    List<Map<?,?>> danhSachThuCungBan();
+
 }

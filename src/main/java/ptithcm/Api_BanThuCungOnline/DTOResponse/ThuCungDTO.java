@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ThuCungDTO {
-    long maThuCung;
-    String tenThuCung;
-    int trangThaiBan;
+    private long maThuCung;
+    private String tenThuCung;
+    private int trangThaiBan;
     String chu;
     String moTa;
     BigDecimal giaHienTai;

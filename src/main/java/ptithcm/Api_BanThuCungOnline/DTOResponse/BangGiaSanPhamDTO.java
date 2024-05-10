@@ -10,7 +10,7 @@ import java.sql.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChiTietBangGiaSanPhamDTO {
+public class BangGiaSanPhamDTO {
     private long mabanggia;
     private long masanpham;
     private String tensanpham;

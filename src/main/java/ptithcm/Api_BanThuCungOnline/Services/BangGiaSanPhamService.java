@@ -7,11 +7,10 @@ import ptithcm.Api_BanThuCungOnline.Entity.CtbanggiasanphamPK;
 import ptithcm.Api_BanThuCungOnline.Repositories.CtBangGiaSanPhamRepo;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class ChiTietBangGiaSanPhamService {
+public class BangGiaSanPhamService {
     @Autowired
     CtBangGiaSanPhamRepo ctBangGiaSanPhamRepo;
     // Lay danh sach chi tiet bang gia
@@ -35,7 +34,5 @@ public class ChiTietBangGiaSanPhamService {
         return ctBangGiaSanPhamRepo.existsById(ctbanggiasanphamPK);
     }
     // Lay danh sach chi tiet bang gia san pham
-    public List<Map<?,?>> danhSachThuCungBan(){
-        return ctBangGiaSanPhamRepo.danhSachThuCungBan();
-    }
+
 }

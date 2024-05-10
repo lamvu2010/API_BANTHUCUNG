@@ -6,6 +6,7 @@ import ptithcm.Api_BanThuCungOnline.Entity.Banggia;
 import ptithcm.Api_BanThuCungOnline.Repositories.BangGiaRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BangGiaService {
@@ -17,6 +18,9 @@ public class BangGiaService {
     }
     public List<Banggia> findAll(){
         return bangGiaRepo.findAll();
+    }
+    public Optional<Banggia> findById(long id){
+        return bangGiaRepo.findById(id);
     }
     public void delete(Banggia banggia){
         bangGiaRepo.delete(banggia);

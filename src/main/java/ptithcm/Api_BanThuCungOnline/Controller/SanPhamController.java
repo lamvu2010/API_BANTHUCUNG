@@ -65,6 +65,9 @@ public class SanPhamController {
 
     public SanPhamDTO convertToDTO(Sanpham sanpham) {
         SanPhamDTO sanPhamDTO = new SanPhamDTO();
+        if(sanpham == null){
+            return sanPhamDTO;
+        }
         sanPhamDTO.setMaSanPham(sanpham.getMasanpham());
         sanPhamDTO.setTenSanPham(sanpham.getTensanpham());
         sanPhamDTO.setGiaHienTai(sanpham.getGiahientai());

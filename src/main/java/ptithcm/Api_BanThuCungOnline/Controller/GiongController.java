@@ -23,6 +23,9 @@ public class GiongController {
 
     public GiongDTO convertToDTO(Giong giong){
         GiongDTO giongDTO = new GiongDTO();
+        if(giong == null){
+            return giongDTO;
+        }
         giongDTO.setMaGiong(giong.getMagiong());
         giongDTO.setTengiong(giong.getTengiong());
         giongDTO.setLoaiThuCung(new LoaiThuCungDTO());

@@ -27,15 +27,6 @@ public class Nhanvien {
     @Column(name = "CCCD", nullable = true, length = 20)
     private String cccd;
 
-    @Column(name = "SOBAOHIEM", nullable = true, length = 30)
-    private String sobaohiem;
-
-    @Column(name = "MASOTHUE", nullable = true, length = 30)
-    private String masothue;
-
-    @Column(name = "MAHOPDONG", nullable = true, length = 40)
-    private String mahopdong;
-
     @Column(name = "CHUCVU", nullable = true, length = 20)
     private String chucvu;
 
@@ -46,12 +37,13 @@ public class Nhanvien {
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "chinhanh")
+    @JoinColumn(name = "MACHINHANH")
     private Chinhanh chinhanh;
 
-    @OneToOne(mappedBy = "nhanvien")
-    Taikhoan taikhoan;
+    @OneToOne(mappedBy = "nhanvien",cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Taikhoan taikhoan;
 
     @OneToMany(mappedBy = "nhanvien")
-    List<Donnhaphang> donnhaphang;
+    private List<Donnhaphang> donnhaphang;
 }

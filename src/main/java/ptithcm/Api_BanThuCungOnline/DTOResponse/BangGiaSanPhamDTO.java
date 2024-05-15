@@ -6,19 +6,22 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BangGiaSanPhamDTO {
-    private long mabanggia;
-    private long masanpham;
-    private String tensanpham;
-    private BigDecimal dongia;
-    private Date thoigianbatdau;
-    private Date thoigianketthuc;
-    private String noidungbanggia;
-    private int machinhanh;
-    private BigDecimal giahientai;
-    private int maloaisanpham;
+    private long maSanPham;
+    private String tenSanPham;
+    private int maLoaiSanPham;
+    private String tenLoaiSanPham;
+    private long maBangGia;
+    private Timestamp thoiGianBatDau;
+    private Timestamp thoiGianKetThuc;
+    private int maChiNhanh;
+    private String tenChiNhanh;
+    private BigDecimal giaHienTai;
+    private BigDecimal giaKhuyenMai;
+    private long soLuongTon;
 }

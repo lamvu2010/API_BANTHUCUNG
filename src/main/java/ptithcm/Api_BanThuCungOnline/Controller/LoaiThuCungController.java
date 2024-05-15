@@ -21,6 +21,9 @@ public class LoaiThuCungController {
 
     public LoaiThuCungDTO convertToDTO(Loaithucung loaithucung){
         LoaiThuCungDTO loaiThuCungDTO = new LoaiThuCungDTO();
+        if(loaithucung == null){
+            return loaiThuCungDTO;
+        }
         loaiThuCungDTO.setMaLoaiThuCung(loaiThuCungDTO.getMaLoaiThuCung());
         loaiThuCungDTO.setTenLoaiThuCung(loaithucung.getTenloaithucung());
         return loaiThuCungDTO;

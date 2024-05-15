@@ -7,6 +7,7 @@ import ptithcm.Api_BanThuCungOnline.Entity.CtbanggiasanphamPK;
 import ptithcm.Api_BanThuCungOnline.Repositories.CtBangGiaSanPhamRepo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -34,5 +35,7 @@ public class BangGiaSanPhamService {
         return ctBangGiaSanPhamRepo.existsById(ctbanggiasanphamPK);
     }
     // Lay danh sach chi tiet bang gia san pham
-
+    public List<Map<?,?>> danhSachSanPhamBan(){
+        return ctBangGiaSanPhamRepo.danhSachSanPhamBan();
+    }
 }

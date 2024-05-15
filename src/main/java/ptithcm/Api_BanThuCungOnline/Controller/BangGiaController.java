@@ -25,18 +25,22 @@ public class BangGiaController {
     public BangGiaDTO convertToDTO(Banggia banggia) {
         BangGiaDTO bangGiaDTO = new BangGiaDTO();
         bangGiaDTO.setChiNhanh(new ChiNhanhDTO());
+        if(banggia == null){
+            return bangGiaDTO;
+        }
         bangGiaDTO.setMaBangGia(banggia.getMabanggia());
         bangGiaDTO.setThoiGianBatDau(banggia.getThoigianbatdau());
         bangGiaDTO.setThoiGianKetThuc(banggia.getThoigianketthuc());
         bangGiaDTO.setNoiDung(banggia.getNoidung());
-        bangGiaDTO.setTrangThai(banggia.getTrangthai());
+        if (banggia.getTrangthai() != null) {
+            bangGiaDTO.setTrangThai(banggia.getTrangthai());
+        }
         if (banggia.getChinhanh() != null) {
             bangGiaDTO.getChiNhanh().setMaChiNhanh(banggia.getChinhanh().getMachinhanh());
             bangGiaDTO.getChiNhanh().setTenChiNhanh(banggia.getChinhanh().getTenchinhanh());
         }
         return bangGiaDTO;
     }
-
     // Lay danh sach bang gia
     @GetMapping
     public ResponseEntity<List<BangGiaDTO>> findAll() {

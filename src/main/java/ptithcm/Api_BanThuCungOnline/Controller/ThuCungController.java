@@ -29,9 +29,14 @@ public class ThuCungController {
 
     public ThuCungDTO convertToDTO(Thucung thucung) {
         ThuCungDTO thuCungDTO = new ThuCungDTO();
+        if(thucung == null){
+            return thuCungDTO;
+        }
         thuCungDTO.setMaThuCung(thucung.getMathucung());
         thuCungDTO.setTenThuCung(thucung.getTenthucung());
-        thuCungDTO.setTrangThaiBan(thucung.getTrangthaiban());
+        if (thucung.getTrangthaiban() != null) {
+            thuCungDTO.setTrangThaiBan(thucung.getTrangthaiban());
+        }
         thuCungDTO.setChu(thucung.getChu());
         thuCungDTO.setGiaHienTai(thucung.getGiahientai());
         thuCungDTO.setMoTa(thucung.getMota());
@@ -47,7 +52,7 @@ public class ThuCungController {
         if (thucung.getGiong() != null) {
             thuCungDTO.getGiong().setMaGiong(thucung.getGiong().getMagiong());
             thuCungDTO.getGiong().setTengiong(thucung.getGiong().getTengiong());
-            if(thucung.getGiong().getLoaithucung()!= null){
+            if (thucung.getGiong().getLoaithucung() != null) {
                 thuCungDTO.getGiong().getLoaiThuCung().setMaLoaiThuCung(thucung.getGiong().getLoaithucung().getMaloaithucung());
                 thuCungDTO.getGiong().getLoaiThuCung().setTenLoaiThuCung(thucung.getGiong().getLoaithucung().getTenloaithucung());
             }

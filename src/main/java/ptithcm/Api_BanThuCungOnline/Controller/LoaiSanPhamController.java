@@ -21,6 +21,9 @@ public class LoaiSanPhamController {
 
     public LoaiSanPhamDTO convertToDTO(Loaisanpham loaisanpham){
         LoaiSanPhamDTO loaiSanPhamDTO = new LoaiSanPhamDTO();
+        if(loaisanpham == null){
+            return loaiSanPhamDTO;
+        }
         loaiSanPhamDTO.setMaLoaiSanPham(loaisanpham.getMaloaisanpham());
         loaiSanPhamDTO.setTenLoaiSanPham(loaisanpham.getTenloaisanpham());
         return loaiSanPhamDTO;

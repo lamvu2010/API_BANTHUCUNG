@@ -5,13 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class SanPhamDTO {
-    long maSanPham;
-    String tenSanPham;
-    BigDecimal giaHienTai;
-    LoaiSanPhamDTO loaiSanPham;
+    private long maSanPham;
+    private String tenSanPham;
+    private BigDecimal giaHienTai;
+    private LoaiSanPhamDTO loaiSanPham;
+    private List<Long> hinhAnh;
 }

@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ptithcm.Api_BanThuCungOnline.DTOResponse.ChiNhanhDTO;
-import ptithcm.Api_BanThuCungOnline.DTOResponse.GiongDTO;
-import ptithcm.Api_BanThuCungOnline.DTOResponse.LoaiThuCungDTO;
-import ptithcm.Api_BanThuCungOnline.DTOResponse.ThuCungDTO;
+import ptithcm.Api_BanThuCungOnline.DTOResponse.*;
+import ptithcm.Api_BanThuCungOnline.Entity.Hinhanh;
 import ptithcm.Api_BanThuCungOnline.Entity.Thucung;
+import ptithcm.Api_BanThuCungOnline.File.StorageService;
 import ptithcm.Api_BanThuCungOnline.Services.ChiNhanhService;
 import ptithcm.Api_BanThuCungOnline.Services.GiongService;
 import ptithcm.Api_BanThuCungOnline.Services.ThuCungService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +26,19 @@ public class ThuCungController {
     ChiNhanhService chiNhanhService;
     @Autowired
     GiongService giongService;
+    @Autowired
+    StorageService storageService;
+
+    public HinhAnhDTO convertToDTO(Hinhanh hinhanh) throws IOException {
+        HinhAnhDTO hinhAnhDTO = new HinhAnhDTO();
+        hinhAnhDTO.setMaHinhAnh(hinhanh.getMahinhanh());
+        hinhAnhDTO.setPath(hinhanh.getPath());
+        hinhAnhDTO.setTenHinhAnh(hinhanh.getTenhinhanh());
+        hinhAnhDTO.setLoaiHinhAnh(hinhanh.getLoaihinhanh());
+        hinhAnhDTO.setTenDuyNhat(hinhanh.getTenduynhat());
+        hinhAnhDTO.setSource(storageService.downloadImageFromFileSystem(hinhanh.getMahinhanh()));
+        return hinhAnhDTO;
+    }
 
     public ThuCungDTO convertToDTO(Thucung thucung) {
         ThuCungDTO thuCungDTO = new ThuCungDTO();
@@ -55,6 +68,12 @@ public class ThuCungController {
             if (thucung.getGiong().getLoaithucung() != null) {
                 thuCungDTO.getGiong().getLoaiThuCung().setMaLoaiThuCung(thucung.getGiong().getLoaithucung().getMaloaithucung());
                 thuCungDTO.getGiong().getLoaiThuCung().setTenLoaiThuCung(thucung.getGiong().getLoaithucung().getTenloaithucung());
+            }
+        }
+        if(!thucung.getHinhanh().isEmpty()){
+            thuCungDTO.setHinhAnh(new ArrayList<>());
+            for(Hinhanh item : thucung.getHinhanh()){
+                thuCungDTO.getHinhAnh().add(item.getMahinhanh());
             }
         }
         return thuCungDTO;

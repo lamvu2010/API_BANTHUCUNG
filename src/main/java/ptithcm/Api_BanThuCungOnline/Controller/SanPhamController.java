@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ptithcm.Api_BanThuCungOnline.DTOResponse.LoaiSanPhamDTO;
 import ptithcm.Api_BanThuCungOnline.DTOResponse.SanPhamDTO;
+import ptithcm.Api_BanThuCungOnline.Entity.Hinhanh;
 import ptithcm.Api_BanThuCungOnline.Entity.Loaisanpham;
 import ptithcm.Api_BanThuCungOnline.Entity.Sanpham;
 import ptithcm.Api_BanThuCungOnline.Services.LoaiSanPhamService;
@@ -65,7 +66,7 @@ public class SanPhamController {
 
     public SanPhamDTO convertToDTO(Sanpham sanpham) {
         SanPhamDTO sanPhamDTO = new SanPhamDTO();
-        if(sanpham == null){
+        if (sanpham == null) {
             return sanPhamDTO;
         }
         sanPhamDTO.setMaSanPham(sanpham.getMasanpham());
@@ -75,6 +76,12 @@ public class SanPhamController {
         if (sanpham.getLoaisanpham() != null) {
             sanPhamDTO.getLoaiSanPham().setMaLoaiSanPham(sanpham.getLoaisanpham().getMaloaisanpham());
             sanPhamDTO.getLoaiSanPham().setTenLoaiSanPham(sanpham.getLoaisanpham().getTenloaisanpham());
+        }
+        if (!sanpham.getHinhanh().isEmpty()) {
+            sanPhamDTO.setHinhAnh(new ArrayList<>());
+            for (Hinhanh item : sanpham.getHinhanh()) {
+                sanPhamDTO.getHinhAnh().add(item.getMahinhanh());
+            }
         }
         return sanPhamDTO;
     }

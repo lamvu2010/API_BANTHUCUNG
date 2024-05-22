@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,8 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Taikhoan{
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Taikhoan {
     @Id
     @Column(name = "TENDANGNHAP", nullable = false, length = 50)
     private String tendangnhap;
@@ -30,15 +28,19 @@ public class Taikhoan{
     @Column(name = "QUYEN", nullable = true)
     private Boolean quyen;
 
-    @OneToOne(cascade = CascadeType.PERSIST,optional = false,fetch = FetchType.EAGER)
-    @MapsId
-    @PrimaryKeyJoinColumn
-    @Fetch(FetchMode.JOIN)
-    private Khachhang khachhang;
+    @Column(name = "TRANGTHAI", nullable = true)
+    private Boolean trangthai;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name="TENDANGNHAP")
-    private Nhanvien nhanvien;
+    @Column(name = "MAXACNHAN", nullable = true)
+    private String maxacnhan;
+
+    @Column(name = "THOIGIANXACNHAN", nullable = true)
+    private LocalDateTime thoigianxacnhan;
+
+    @Column(name = "THOIGIANTAOMA", nullable = true)
+    private LocalDateTime thoigiantaoma;
+
+    @Column(name = "THOIGIANHETHAN", nullable = true)
+    private LocalDateTime thoigianhethan;
 
 }

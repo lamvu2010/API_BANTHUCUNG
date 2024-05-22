@@ -40,10 +40,9 @@ public class Nhanvien {
     @JoinColumn(name = "MACHINHANH")
     private Chinhanh chinhanh;
 
-    @OneToOne(mappedBy = "nhanvien",cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Taikhoan taikhoan;
-
     @OneToMany(mappedBy = "nhanvien")
     private List<Donnhaphang> donnhaphang;
+
+    @OneToMany(mappedBy = "nhanvien")
+    private List<Hinhanh> hinhanh;
 }

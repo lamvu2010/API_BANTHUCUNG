@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Khachhang {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "MAKHACHHANG", nullable = false, length = 50)
     private String makhachhang;
@@ -34,9 +33,6 @@ public class Khachhang {
     @Column(name = "DIACHI", nullable = true, length = 50)
     private String diachi;
 
-    @Column(name = "HINHANH", nullable = true, length = 1)
-    private String hinhanh;
-
     @Column(name = "SODIENTHOAI", nullable = true, length = 15)
     private String sodienthoai;
 
@@ -46,9 +42,9 @@ public class Khachhang {
     @Column(name = "CCCD", nullable = true, length = 20)
     private String cccd;
 
-    @OneToOne(mappedBy = "khachhang")
-    private Taikhoan taikhoan;
-
     @OneToMany(mappedBy = "khachhang")
     private List<Dondat> dondat;
+
+    @OneToMany(mappedBy = "khachhang")
+    private List<Hinhanh> hinhanh;
 }

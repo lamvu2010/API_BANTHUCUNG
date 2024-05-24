@@ -31,11 +31,15 @@ public class Sanpham {
     private Loaisanpham loaisanpham;
 
     @OneToMany(mappedBy = "sanpham")
-    List<Ctbanggiasanpham> ctbanggiasanpham;
+    private List<Ctbanggiasanpham> ctbanggiasanpham;
 
     @OneToMany(mappedBy = "sanpham")
-    List<Ctnhapsanpham> ctnhapsanpham;
+    private List<Ctnhapsanpham> ctnhapsanpham;
 
     @OneToMany(mappedBy = "sanpham")
-    List<Ctsanpham> ctsanpham;
+    private List<Ctsanpham> ctsanpham;
+
+    @OneToMany(mappedBy = "sanpham")
+    private List<Hinhanh> hinhanh;
+
 }

@@ -44,4 +44,7 @@ public class Thucung {
     @ManyToOne
     @JoinColumn(name = "MAGIONG")
     private Giong giong;
+
+    @OneToMany(mappedBy = "thucung")
+    List<Hinhanh> hinhanh;
 }

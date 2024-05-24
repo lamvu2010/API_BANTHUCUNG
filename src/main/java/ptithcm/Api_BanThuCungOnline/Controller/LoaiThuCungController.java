@@ -24,7 +24,7 @@ public class LoaiThuCungController {
         if(loaithucung == null){
             return loaiThuCungDTO;
         }
-        loaiThuCungDTO.setMaLoaiThuCung(loaiThuCungDTO.getMaLoaiThuCung());
+        loaiThuCungDTO.setMaLoaiThuCung(loaithucung.getMaloaithucung());
         loaiThuCungDTO.setTenLoaiThuCung(loaithucung.getTenloaithucung());
         return loaiThuCungDTO;
     }

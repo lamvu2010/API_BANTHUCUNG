@@ -31,7 +31,20 @@ public class ChiNhanhService {
     public void delete(Chinhanh chinhanh){
         chiNhanhRepo.delete(chinhanh);
     }
+    public void deleteById(int id){
+        chiNhanhRepo.deleteById(id);
+    }
+
     // Kiem tra ton tai
+    public boolean existsByTenChiNhanh(String tenChiNhanh){
+        List<Chinhanh> listAll = chiNhanhRepo.findAll();
+        for(Chinhanh item : listAll){
+            if(item.getTenchinhanh().equals(tenChiNhanh)){
+                return true;
+            }
+        }
+        return false;
+    }
     public boolean existById(int id){
         return chiNhanhRepo.existsById(id);
     }

@@ -69,7 +69,7 @@ public class GiongController {
         Giong giong = new Giong();
         giong.setMagiong(giongDTO.getMaGiong());
         giong.setTengiong(giongDTO.getTengiong());
-        giong.setLoaithucung(loaiThuCungService.findById(giongDTO.getMaGiong()).orElse(null));
+        giong.setLoaithucung(loaiThuCungService.findById(giongDTO.getLoaiThuCung().getMaLoaiThuCung()).orElse(null));
         giongService.save(giong);
         GiongDTO giongDTO1 = convertToDTO(giong);
         return new ResponseEntity<>(giongDTO1,HttpStatus.OK);

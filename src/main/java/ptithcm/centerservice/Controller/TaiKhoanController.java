@@ -54,4 +54,21 @@ public class TaiKhoanController {
         Taikhoan taikhoan = taiKhoanService.findById(id).get();
         return new ResponseEntity<>(taikhoan,HttpStatus.OK);
     }
+
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody TaiKhoanDTO taiKhoanDTO){
+        if(!taiKhoanService.isExistsById(taiKhoanDTO.getTenDangNhap())){
+            return new ResponseEntity<>("Tài khoản không tồn tại",HttpStatus.BAD_REQUEST);
+        }
+        Taikhoan taikhoan = taiKhoanService.findById(taiKhoanDTO.getTenDangNhap()).get();
+        taikhoan.setMatkhau(taiKhoanDTO.getMatKhau());
+        taikhoan.setTrangthai(taiKhoanDTO.getTrangThai());
+        try{
+            taikhoan = taiKhoanService.save(taikhoan);
+            return new ResponseEntity<>("Cập nhật thành công", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Cập nhật thất bại", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

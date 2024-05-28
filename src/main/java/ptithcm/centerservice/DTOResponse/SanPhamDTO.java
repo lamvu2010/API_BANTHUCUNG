@@ -16,4 +16,5 @@ public class SanPhamDTO {
     private BigDecimal giaHienTai;
     private LoaiSanPhamDTO loaiSanPham;
     private List<Long> hinhAnh;
+    private int maChiNhanh;
 }

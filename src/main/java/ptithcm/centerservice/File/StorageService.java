@@ -2,6 +2,7 @@ package ptithcm.centerservice.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ptithcm.centerservice.Entity.Hinhanh;
 import ptithcm.centerservice.Entity.Nhanvien;
@@ -32,8 +33,10 @@ public class StorageService {
     private SanPhamRepo sanPhamRepo;
 
 
-    private final String FOLDER_PATH = "D:/HUONG DICH VU/Project/centerservice/src/main/java/ptithcm/centerservice/HinhAnh/";
+    private final String FOLDER_PATH = "D:/HUONG DICH VU/Project/center-service/src/main/java/ptithcm/centerservice/HinhAnh/";
 
+    // lưu ảnh từ multipart về file system
+    @Transactional
     public String uploadImageToFileSystem(MultipartFile file, String maNhanVien, String maKhachHang, Long maThuCung, Long maSanPham) throws IOException {
         String uuid = UUID.randomUUID().toString();
         String filePath = FOLDER_PATH + uuid + ".jpg";
@@ -64,6 +67,8 @@ public class StorageService {
         return null;
     }
 
+    // lấy ảnh từ file system để gửi đi
+    @Transactional
     public byte[] downloadImageFromFileSystem(long id) throws IOException {
         Hinhanh hinhanh = new Hinhanh();
         Hinhanh fileData = hinhAnhRepo.findById(id).orElse(null);

@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ptithcm.centerservice.DTOResponse.LoaiSanPhamDTO;
 import ptithcm.centerservice.DTOResponse.SanPhamDTO;
-import ptithcm.centerservice.Entity.Hinhanh;
-import ptithcm.centerservice.Entity.Loaisanpham;
-import ptithcm.centerservice.Entity.Sanpham;
+import ptithcm.centerservice.Entity.*;
+import ptithcm.centerservice.Repositories.CtSanPhamRepo;
+import ptithcm.centerservice.Services.ChiTietSanPhamService;
 import ptithcm.centerservice.Services.LoaiSanPhamService;
 import ptithcm.centerservice.Services.SanPhamService;
 
@@ -20,9 +20,11 @@ import java.util.Optional;
 @RequestMapping("/sanpham")
 public class SanPhamController {
     @Autowired
-    SanPhamService sanPhamService;
+    private SanPhamService sanPhamService;
     @Autowired
-    LoaiSanPhamService loaiSanPhamService;
+    private LoaiSanPhamService loaiSanPhamService;
+    @Autowired
+    private ChiTietSanPhamService chiTietSanPhamService;
 
     // Lay danh sach san pham theo id loai
     @GetMapping("/loaiSanPham/{id}")
@@ -41,47 +43,54 @@ public class SanPhamController {
     // lay danh sach san pham
     @GetMapping
     public ResponseEntity<List<SanPhamDTO>> getAll() {
-        List<Sanpham> list = sanPhamService.findAll();
-        List<SanPhamDTO> listJson = sanPhamDTO(list);
-        return new ResponseEntity<>(listJson, HttpStatus.OK);
+        List<Ctsanpham> list = chiTietSanPhamService.findAll();
+        List<SanPhamDTO> dtoList = new ArrayList<>();
+        for (Ctsanpham item : list) {
+            SanPhamDTO sanPhamDTO = convertToDTO(item);
+            dtoList.add(sanPhamDTO);
+        }
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     // List san pham to list sanphamDTO
-    public List<SanPhamDTO> sanPhamDTO(List<Sanpham> list) {
-        List<SanPhamDTO> listJson = new ArrayList<>();
-        for (Sanpham item : list) {
-            SanPhamDTO sp = new SanPhamDTO();
-            sp.setMaSanPham(item.getMasanpham());
-            sp.setTenSanPham(item.getTensanpham());
-            sp.setGiaHienTai(item.getGiahientai());
-            sp.setLoaiSanPham(new LoaiSanPhamDTO());
-            if (item.getLoaisanpham() != null) {
-                sp.getLoaiSanPham().setMaLoaiSanPham(item.getLoaisanpham().getMaloaisanpham());
-                sp.getLoaiSanPham().setTenLoaiSanPham(item.getLoaisanpham().getTenloaisanpham());
-            }
-            listJson.add(sp);
-        }
-        return listJson;
-    }
+//    public List<SanPhamDTO> sanPhamDTO(List<Sanpham> list) {
+//        List<SanPhamDTO> listJson = new ArrayList<>();
+//        for (Sanpham item : list) {
+//            SanPhamDTO sp = new SanPhamDTO();
+//            sp.setMaSanPham(item.getMasanpham());
+//            sp.setTenSanPham(item.getTensanpham());
+//            sp.setGiaHienTai(item.getGiahientai());
+//            sp.setLoaiSanPham(new LoaiSanPhamDTO());
+//            if (item.getLoaisanpham() != null) {
+//                sp.getLoaiSanPham().setMaLoaiSanPham(item.getLoaisanpham().getMaloaisanpham());
+//                sp.getLoaiSanPham().setTenLoaiSanPham(item.getLoaisanpham().getTenloaisanpham());
+//            }
+//            listJson.add(sp);
+//        }
+//        return listJson;
+//    }
 
-    public SanPhamDTO convertToDTO(Sanpham sanpham) {
+    public SanPhamDTO convertToDTO(Ctsanpham ctsanpham) {
         SanPhamDTO sanPhamDTO = new SanPhamDTO();
-        if (sanpham == null) {
+        if (ctsanpham == null) {
             return sanPhamDTO;
         }
-        sanPhamDTO.setMaSanPham(sanpham.getMasanpham());
-        sanPhamDTO.setTenSanPham(sanpham.getTensanpham());
-        sanPhamDTO.setGiaHienTai(sanpham.getGiahientai());
+        sanPhamDTO.setMaSanPham(ctsanpham.getSanpham().getMasanpham());
+        sanPhamDTO.setTenSanPham(ctsanpham.getSanpham().getTensanpham());
+        sanPhamDTO.setGiaHienTai(ctsanpham.getSanpham().getGiahientai());
         sanPhamDTO.setLoaiSanPham(new LoaiSanPhamDTO());
-        if (sanpham.getLoaisanpham() != null) {
-            sanPhamDTO.getLoaiSanPham().setMaLoaiSanPham(sanpham.getLoaisanpham().getMaloaisanpham());
-            sanPhamDTO.getLoaiSanPham().setTenLoaiSanPham(sanpham.getLoaisanpham().getTenloaisanpham());
+        if (ctsanpham.getSanpham().getLoaisanpham() != null) {
+            sanPhamDTO.getLoaiSanPham().setMaLoaiSanPham(ctsanpham.getSanpham().getLoaisanpham().getMaloaisanpham());
+            sanPhamDTO.getLoaiSanPham().setTenLoaiSanPham(ctsanpham.getSanpham().getLoaisanpham().getTenloaisanpham());
         }
-        if (!sanpham.getHinhanh().isEmpty()) {
+        if (!ctsanpham.getSanpham().getHinhanh().isEmpty()) {
             sanPhamDTO.setHinhAnh(new ArrayList<>());
-            for (Hinhanh item : sanpham.getHinhanh()) {
+            for (Hinhanh item : ctsanpham.getSanpham().getHinhanh()) {
                 sanPhamDTO.getHinhAnh().add(item.getMahinhanh());
             }
+        }
+        if (ctsanpham.getChinhanh() != null) {
+            sanPhamDTO.setMaChiNhanh(ctsanpham.getChinhanh().getMachinhanh());
         }
         return sanPhamDTO;
     }
@@ -89,16 +98,22 @@ public class SanPhamController {
     // Them san pham
     @PostMapping
     public ResponseEntity<?> insert(@RequestBody SanPhamDTO sanPhamDTO) {
-        Sanpham sp = new Sanpham();
-        sp.setTensanpham(sanPhamDTO.getTenSanPham());
-        sp.setGiahientai(sanPhamDTO.getGiaHienTai());
-        sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getLoaiSanPham().getMaLoaiSanPham()).orElse(null));
-        sp = sanPhamService.save(sp);
-        if (sanPhamService.existsById(sp.getMasanpham())) {
-            SanPhamDTO sanPhamDTO1 = convertToDTO(sp);
+        try {
+            Sanpham sp = new Sanpham();
+            Ctsanpham ctsanpham = new Ctsanpham();
+            CtsanphamPK ctsanphamPK = new CtsanphamPK();
+            sp.setTensanpham(sanPhamDTO.getTenSanPham());
+            sp.setGiahientai(sanPhamDTO.getGiaHienTai());
+            sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getLoaiSanPham().getMaLoaiSanPham()).orElse(null));
+            sp = sanPhamService.save(sp);
+            ctsanphamPK.setMasanpham(sp.getMasanpham());
+            ctsanphamPK.setMachinhanh(sanPhamDTO.getMaChiNhanh());
+            ctsanpham.setId(ctsanphamPK);
+            chiTietSanPhamService.save(ctsanpham);
+            SanPhamDTO sanPhamDTO1 = convertToDTO(ctsanpham);
             return new ResponseEntity<>(sanPhamDTO1, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Cap nhat that bai", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Thêm thất bại", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -114,20 +129,22 @@ public class SanPhamController {
         sp.setTensanpham(sanPhamDTO.getTenSanPham());
         sp.setLoaisanpham(loaiSanPhamService.findById(sanPhamDTO.getLoaiSanPham().getMaLoaiSanPham()).orElse(null));
         sp = sanPhamService.save(sp);
-        SanPhamDTO sanPhamDTO1 = convertToDTO(sp);
+        Ctsanpham ctsanpham = chiTietSanPhamService.findById(new CtsanphamPK(sanPhamDTO.getMaChiNhanh(),sanPhamDTO.getMaSanPham())).get();
+        SanPhamDTO sanPhamDTO1 = convertToDTO(ctsanpham);
         return new ResponseEntity<>(sanPhamDTO1, HttpStatus.OK);
     }
 
     // Xoa san pham
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        boolean spTonTai = sanPhamService.existsById(id);
+    @DeleteMapping("/{sanpham}/{chinhanh}")
+    public ResponseEntity<?> delete(@PathVariable Long sanpham,@PathVariable int chinhanh) {
+        CtsanphamPK ctsanphamPK = new CtsanphamPK(chinhanh,sanpham);
+        boolean spTonTai = chiTietSanPhamService.existsById(ctsanphamPK);
         if (spTonTai == false) {
             return new ResponseEntity<>("Id khong ton tai", HttpStatus.NOT_FOUND);
         }
-        Optional<Sanpham> sanpham = sanPhamService.findById(id);
-        sanPhamService.delete(sanpham.orElse(null));
-        spTonTai = sanPhamService.existsById(id);
+        Optional<Ctsanpham> ctsanpham = chiTietSanPhamService.findById(ctsanphamPK);
+        chiTietSanPhamService.delete(ctsanpham.orElse(null));
+        spTonTai = chiTietSanPhamService.existsById(ctsanphamPK);
         if (spTonTai == true) {
             return new ResponseEntity<>("Xoa that bai", HttpStatus.BAD_REQUEST);
         } else {

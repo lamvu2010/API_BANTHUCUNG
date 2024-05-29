@@ -43,12 +43,13 @@ public class NhanVienController {
             nhanVienDTO.getChiNhanh().setMaChiNhanh(nhanvien.getChinhanh().getMachinhanh());
             nhanVienDTO.getChiNhanh().setTenChiNhanh(nhanvien.getChinhanh().getTenchinhanh());
         }
-        if (!nhanvien.getHinhanh().isEmpty()) {
+        if (nhanvien.getHinhanh()!=null) {
             nhanVienDTO.setHinhAnh(new ArrayList<>());
             for (Hinhanh item : nhanvien.getHinhanh()) {
                 nhanVienDTO.getHinhAnh().add(item.getMahinhanh());
             }
         }
+        nhanVienDTO.setTrangThai(taiKhoanService.findById(nhanvien.getManhanvien()).get().getTrangthai());
         return nhanVienDTO;
     }
 
@@ -82,6 +83,10 @@ public class NhanVienController {
         nhanvien.setChucvu(nhanVienDTO.getChucVu());
         nhanvien.setSodienthoai(nhanVienDTO.getSoDienThoai());
         nhanvien.setManhanvien(nhanVienService.maNhanVienMoi());
+        System.out.println();
+        System.out.println("/////////////////////////////////////////////////////////////////////");
+        System.out.println("Mã nhân viên: "+nhanvien.getManhanvien());
+        System.out.println("/////////////////////////////////////////////////////////////////////");
         if (nhanVienDTO.getChiNhanh() != null && nhanVienDTO.getChiNhanh().getMaChiNhanh() != 0) {
             nhanvien.setChinhanh(chiNhanhService.findById(nhanVienDTO.getChiNhanh().getMaChiNhanh()).orElse(null));
         }

@@ -19,4 +19,5 @@ public class NhanVienDTO {
     private String email;
     private ChiNhanhDTO chiNhanh;
     private List<Long> hinhAnh;
+    private boolean trangThai;
 }

@@ -58,6 +58,8 @@ public class TaoTaiKhoanService {
 //        } catch (MessagingException e) {
 //            return "Gửi mail thất bại!";
 //        }
+        System.out.println();
+        System.out.println("Ma xac nhan: "+ taikhoan.getMaxacnhan());
         return taikhoan.getMaxacnhan();
     }
 

@@ -32,7 +32,7 @@ public class StorageService {
     private SanPhamRepo sanPhamRepo;
 
 
-    private final String FOLDER_PATH = "D:/HUONG DICH VU/Project/centerservice/src/main/java/ptithcm/centerservice/HinhAnh/";
+    private final String FOLDER_PATH = "D:\\SpringBoostWorkspace\\Long\\API_BANTHUCUNG\\src\\main\\java\\ptithcm\\centerservice\\HinhAnh\\";
 
     public String uploadImageToFileSystem(MultipartFile file, String maNhanVien, String maKhachHang, Long maThuCung, Long maSanPham) throws IOException {
         String uuid = UUID.randomUUID().toString();

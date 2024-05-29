@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Nhanvien {
-
     @Id
     @Column(name = "MANHANVIEN", nullable = false, length = 50)
     private String manhanvien;

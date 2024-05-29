@@ -83,10 +83,6 @@ public class NhanVienController {
         nhanvien.setChucvu(nhanVienDTO.getChucVu());
         nhanvien.setSodienthoai(nhanVienDTO.getSoDienThoai());
         nhanvien.setManhanvien(nhanVienService.maNhanVienMoi());
-        System.out.println();
-        System.out.println("/////////////////////////////////////////////////////////////////////");
-        System.out.println("Mã nhân viên: "+nhanvien.getManhanvien());
-        System.out.println("/////////////////////////////////////////////////////////////////////");
         if (nhanVienDTO.getChiNhanh() != null && nhanVienDTO.getChiNhanh().getMaChiNhanh() != 0) {
             nhanvien.setChinhanh(chiNhanhService.findById(nhanVienDTO.getChiNhanh().getMaChiNhanh()).orElse(null));
         }
